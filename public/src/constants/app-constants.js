@@ -1,0 +1,4 @@
+export default {
+  USER_SIGNED_UP: 'USER_SIGNED_UP',
+  USER_LOGGED_IN: 'USER_LOGGED_IN'
+};
