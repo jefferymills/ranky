@@ -4,6 +4,9 @@ import { Route, RouteHandler, Link, Navigation } from 'react-router';
 import APP from './components/App';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Home from './components/Home';
+import War from './components/War';
+import UserStore from './stores/UserStore';
 
 import reqwest from 'reqwest';
 
@@ -26,7 +29,7 @@ const Users = React.createClass({
     }).then(function(users) {
       self.setState({
         users: users
-      })
+      });
     }).fail(function(err, msg) {
       self.transitionTo('/login');
     });
@@ -43,13 +46,13 @@ const Users = React.createClass({
   }
 });
 
-
-
 var routes = (
   <Route handler={APP}>
     <Route name="login" handler={Login} />
     <Route name="signup" handler={Signup} />
     <Route name="users" handler={Users} />
+    <Route name="war/:id" handler={War} />
+    <Route name="/" handler={Home} />
   </Route>
 );
 

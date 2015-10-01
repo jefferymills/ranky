@@ -11,6 +11,8 @@ use Response;
 use Input;
 use Hash;
 use JWTAuth;
+use Facebook\FacebookRequest;
+use App\War;
 
 class UserController extends Controller
 {
@@ -46,7 +48,7 @@ class UserController extends Controller
     public function store()
     {
         //
-        $credentials = Input::only('name', 'email', 'password');
+        $credentials = Input::only('name', 'email', 'password', 'fb_id');
         $credentials['password'] = Hash::make($credentials['password']);
 
         try {
@@ -58,6 +60,63 @@ class UserController extends Controller
         $token = JWTAuth::fromUser($user);
 
         return Response::json(compact('token'));
+    }
+
+    public function facebookStore()
+    {
+
+      $currentUser = User::where('fb_id', Input::get('userID'))->first();
+
+      if($currentUser !== null) {
+          $user = $currentUser;
+          $user->accessToken = Input::get('accessToken');
+          $user->save();
+      } else {
+        try {
+          $user = new User;
+          $user->accessToken = Input::get('accessToken');
+          $user->fb_id = Input::get('userID');
+          $user->save();
+
+        } catch (Exception $e) {
+          return Response::json(['error' => 'User already exists.'], 'Illuminate\Http\Response::HTTP_CONFLICT');
+        }
+      }
+
+      $token = JWTAuth::fromUser($user, ['name' => $user->name, 'id' => $user->id]);
+
+      return Response::json(compact('token'));
+    }
+
+    public function facebookUpdate()
+    {
+      $data = Input::only('name', 'email', 'id');
+
+      try {
+        $user = User::where('fb_id', $data['id'])->first();
+        $user->name = $data['name'];
+        if(!empty($data['email'])) {
+          $user->email = $data['email'];
+        } else {
+          $user->email = $data['name'] . '@facebook.com';
+        }
+        $user->save();
+      } catch (Exception $e) {
+        return Response::json(['error' => "User doesn't exist"], 'Illuminate\Http\Response::HTTP_CONFLICT');
+      }
+
+      $token = JWTAuth::fromUser($user, ['name' => $user->name, 'id' => $user->id]);
+
+      return Response::json(compact('token'));
+    }
+
+    public function userRanking($user_id)
+    {
+      $data = Input::all();
+
+      $userRanking = War::userRanking($data['war_id'], $user_id);
+
+      return Response::json($userRanking);
     }
 
     /**

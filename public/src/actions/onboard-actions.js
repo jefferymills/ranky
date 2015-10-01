@@ -54,5 +54,43 @@ export const OnboardActions = {
         response: resp
       });
     });
+  },
+
+  facebookLogin() {
+    FB.login(function(response) {
+      if(response.status === 'connected') {
+        reqwest({
+          url: 'facebook-login',
+          method: 'post',
+          data: response.authResponse,
+          headers: {
+            'X-CSRF-TOKEN': csrf_token
+          }
+        }).then(function(resp) {
+
+          FB.api('/me?fields=email,name', function(response) {
+            reqwest({
+              url: 'facebook-user-update',
+              method: 'post',
+              data: response,
+              headers: {
+                'X-CSRF-TOKEN': csrf_token
+              }
+            }).then(function() {
+              localStorage.setItem('jwt', resp.token);
+              AppDispatcher.handleAction({
+                actionType: AppConstants.USER_LOGGED_IN,
+                response: resp
+              });
+            });
+          });
+
+        });
+      } else if (response.status === 'not_authorized') {
+
+      } else {
+
+      }
+    }, {scope: 'public_profile,email'});
   }
 };

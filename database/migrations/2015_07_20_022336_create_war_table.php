@@ -29,6 +29,6 @@ class CreateWarTable extends Migration
      */
     public function down()
     {
-        Schema::drop('battles');
+        Schema::drop('wars');
     }
 }

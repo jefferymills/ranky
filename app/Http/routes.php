@@ -2,7 +2,6 @@
 
 use App\User;
 use App\Http\Controllers\Auth;
-use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\ResponseTrait;
 use Illuminate\Support\Facades\Input;
@@ -32,10 +31,17 @@ try {
   return Response::json(compact('token'));
 });
 
+Route::post('facebook-login', 'UserController@facebookStore');
+Route::post('facebook-user-update', 'UserController@facebookUpdate');
+
 Route::post('signup', 'UserController@store');
 
 Route::group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function() {
   Route::resource('user', 'UserController');
+  Route::resource('wars', 'WarController');
+  Route::resource('battle', 'BattleController');
+  Route::get('rankings/{user_id}', 'UserController@userRanking');
+  Route::get('rankings/public/{war_id}', 'WarController@publicRanking');
 });
 
 Route::get('auth', ['middleware' => 'jwt.auth'], function() {

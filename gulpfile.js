@@ -9,14 +9,14 @@ var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('browserify', function() {
   gulp.src('public/src/main.js')
+    .pipe(sourcemaps.init())
     .pipe(browserify({
       debug: true,
       transform: ['babelify'],
       extensions: ['.jsx', '.js']
     }))
     .on('error', swallowError)
-    .pipe(sourcemaps.init())
-    .pipe(sourcemaps.write("./"))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('public/dist'));
 });
 

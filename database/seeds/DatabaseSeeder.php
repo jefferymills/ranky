@@ -54,7 +54,7 @@ class WarTableSeeder extends Seeder
     War::create(array(
       'title' => 'Best Superhero Movie',
       'public' => TRUE,
-      'user_id' => 4
+      'user_id' => 1
     ));
   }
 }
@@ -71,59 +71,59 @@ class PlayerTableSeeder extends Seeder
     $playersArray = [
       [
         'name' => 'Iron Man',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'Gaurdians Of The Galaxy',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'Batman Begins',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'X-Men',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'Captain America: The First Avenger',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'Superman II',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'Captain America: The Winter Soldier',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'X2: X-Men United',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'X-Men: First Class',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'Superman: The Movie',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'Batman',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'The Avengers',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'The Incredibles',
-        'war_id' => 4
+        'war_id' => 1
       ],
       [
         'name' => 'The Dark Knight',
-        'war_id' => 4
+        'war_id' => 1
       ]
     ];
 
