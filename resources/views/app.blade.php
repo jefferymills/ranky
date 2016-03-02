@@ -26,7 +26,7 @@
            fjs.parentNode.insertBefore(js, fjs);
          }(document, 'script', 'facebook-jssdk'));
       </script>
-        <div id="main"></div>
+        <div id="root"></div>
         <script>
           var csrf_token = '{{ csrf_token() }}';
         </script>
